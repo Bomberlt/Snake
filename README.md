@@ -1,7 +1,9 @@
 Snake
 =====
 
-Old school snake with beautiful, modern graphics.  Available on the [Android Market](https://play.google.com/store/apps/details?id=com.nickeyre.snake).
+Old school snake with beautiful, modern graphics.  
+
+Forked from [neyre/Snake](https://github.com/neyre/Snake). Original version is available on the [Play Store](https://play.google.com/store/apps/details?id=com.nickeyre.snake).
 
 Control the snake as it picks up food but don't hit anything! This snake has multiple view modes which fit in beautifully with the Holo theme on Android Ice Cream Sandwich and Jelly Bean phones and tablets.
 
