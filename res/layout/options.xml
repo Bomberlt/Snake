@@ -57,7 +57,7 @@ along with Snake.  If not, see <http://www.gnu.org/licenses/>.
     android:entries="@array/optionsControls" />
 
   <TextView
-    android:id="@+id/textView3"
+    android:id="@+id/moves"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
@@ -70,7 +70,7 @@ along with Snake.  If not, see <http://www.gnu.org/licenses/>.
     android:id="@+id/spinnerView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/textView3"
+    android:layout_below="@+id/moves"
     android:layout_centerHorizontal="true"
     android:entries="@array/optionsView" />
 

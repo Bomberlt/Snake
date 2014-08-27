@@ -163,7 +163,7 @@ public class Game extends View {
   public class Snake{
 
     public ArrayList<Block> blocks;
-    private int direction,length;
+    private int direction,length,maxLength;
     public boolean stopped=false;
 
     // Create Snake with 3 Blocks
@@ -172,65 +172,61 @@ public class Game extends View {
       // Create Leading Block
       blocks = new ArrayList<Block>();
       blocks.add(new Block(squaresWidth/2,squaresHeight/2,1));
-      length=3;
+      length=1;
+      maxLength = 3;
 
-      // Calculate Random Initial Direction and Add 2 Remaining Blocks
-      direction = random.nextInt(4);
-      switch(direction){
-        case 0: //Going Right
-          blocks.add(new Block(squaresWidth/2-1,squaresHeight/2,1));
-          blocks.add(new Block(squaresWidth/2-2,squaresHeight/2,1));
-          break;
-        case 1: //Going Down
-          blocks.add(new Block(squaresWidth/2,squaresHeight/2-1,1));
-          blocks.add(new Block(squaresWidth/2,squaresHeight/2-2,1));
-          break;
-        case 2: //Going Left
-          blocks.add(new Block(squaresWidth/2+1,squaresHeight/2,1));
-          blocks.add(new Block(squaresWidth/2+2,squaresHeight/2,1));
-          break;
-        case 3: //Going Up
-          blocks.add(new Block(squaresWidth/2,squaresHeight/2+1,1));
-          blocks.add(new Block(squaresWidth/2,squaresHeight/2+2,1));
-      }
+
+//      // Calculate Random Initial Direction and Add 2 Remaining Blocks
+//      direction = random.nextInt(4);
+//      switch(direction){
+//        case 0: //Going Right
+//          blocks.add(new Block(squaresWidth/2-1,squaresHeight/2,1));
+//          blocks.add(new Block(squaresWidth/2-2,squaresHeight/2,1));
+//          break;
+//        case 1: //Going Down
+//          blocks.add(new Block(squaresWidth/2,squaresHeight/2-1,1));
+//          blocks.add(new Block(squaresWidth/2,squaresHeight/2-2,1));
+//          break;
+//        case 2: //Going Left
+//          blocks.add(new Block(squaresWidth/2+1,squaresHeight/2,1));
+//          blocks.add(new Block(squaresWidth/2+2,squaresHeight/2,1));
+//          break;
+//        case 3: //Going Up
+//          blocks.add(new Block(squaresWidth/2,squaresHeight/2+1,1));
+//          blocks.add(new Block(squaresWidth/2,squaresHeight/2+2,1));
+//      }
     }
 
     // Move & Draw Snake
     public void draw(Canvas canvas){
-      if(!stopped) move();
+      //if(!stopped) move();
       for(Block block:blocks) block.draw(canvas);
     }
 
     // Turn One Direction Left from Current Orientation (Snake Oriented)
     // If Not Going Left or Right, Go Left (Four Direction)
     public void turnLeft(){
-      if(snakeOriented){
-        this.direction -= 1;
-        if(this.direction < 0) this.direction = 3;
-      }else if(this.direction != 0 && this.direction != 2)
         this.direction = 2;
+        move();
     }
 
     // Turn One Direction Right from Current Orientation (Snake Oriented)
     // If Not Going Left or Right, Go Right (Four Direction)
     public void turnRight(){
-      if(snakeOriented){
-        this.direction += 1;
-        if(this.direction > 3) this.direction = 0;
-      }else if(this.direction != 0 && this.direction != 2)
         this.direction = 0;
+        move();
     }
 
     // If Not Going Down or Up, Go Down (Four Direction Only)
     public void turnDown(){
-      if(!snakeOriented && this.direction != 1 && this.direction != 3)
         this.direction = 1;
+        move();
     }
 
     // If Not Going Down or Up, Go Up (Four Direction Only)
     public void turnUp(){
-      if(!snakeOriented && this.direction != 1 && this.direction != 3)
         this.direction = 3;
+        move();
     }
 
     // Move Snake 1 Space in Current Direction
@@ -273,12 +269,18 @@ public class Game extends View {
         // If Collision with Food
         if(this.collides(food)){
           food.move(this,walls);
-          length++;
+          maxLength++;
           score();
+          blocks.remove(length);
 
         // If No Collision with Food, Remove Last Block
         }else
-          blocks.remove(length);
+          if (length == maxLength)
+            blocks.remove(length);
+          else
+          {
+            length++;
+          }
       }
     }
 
